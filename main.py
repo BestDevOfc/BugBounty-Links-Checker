@@ -25,7 +25,7 @@ class linksChecker(object):
                 'User-Agent': "Firefox Mozilla Google"
             }
             req = requests.get(url=f"{url}", headers=headers, verify=False, timeout=60)
-            self.results_file.write(f"{url}\n")
+            self.results_file.write(f"{url} | ({len(req.text)}) | {req.status_code}\n")
             self.results_file.flush()
         except Exception as err:
             if f"Failed to resolve" in f"{err}":
@@ -33,7 +33,7 @@ class linksChecker(object):
             else:
                 # this may be due to certificate errors, these may be missed by many scanning tools and 
                 # bounty hunters! (read a writeup about how a guy found a simple LFI bcs of it)
-                print(f"{Fore.RED}[+] - {Fore.GREEN}[*** Non-Standard Error: {Fore.YELLOW}{url} {Fore.GREEN}***]")
+                print(f"{Fore.RED}[+] - {Fore.GREEN}[*** Non-Standard Error: {Fore.YELLOW}{url} {Fore.GREEN}***]\n")
                 self.results_file.write(f"[ *** Non-Standard Errors {url}  ]")
                 self.results_file.flush()
         self.pbar.update(1)
