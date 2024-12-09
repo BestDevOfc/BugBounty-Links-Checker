@@ -15,6 +15,7 @@ class linksChecker(object):
     def __init__(self, fname):
         self.urls = list(set(open(f"{fname}", 'r').readlines()))
         self.results_file = open(f"Live_{fname}", 'w')
+        self.nonstandard_errs = open(f"Live_{fname}", 'w')
         self.pbar = tqdm(total=len(self.urls))
     def check_url(self, url):
         try:
@@ -28,7 +29,7 @@ class linksChecker(object):
             self.results_file.write(f"{url} | ({len(req.text)}) | {req.status_code}\n")
             self.results_file.flush()
         except Exception as err:
-            if f"Failed to resolve" in f"{err}":
+            if f"Failed to resolve" in f"{err}" or f"ConnectionResetEr" in f"{err}" or f"Max retries exceeded with " in f"{err}":
                 pass # non-reachable
             else:
                 # this may be due to certificate errors, these may be missed by many scanning tools and 
