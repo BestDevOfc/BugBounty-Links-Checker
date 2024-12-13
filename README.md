@@ -1,5 +1,7 @@
 # SubDomain Fly Over tool
 
+# When checking live subdomains via HTTPX do **NOT** use a proxy/VPN because I've seen it in some cases where the reverse proxy just makes sure your connection hangs or just doesn't go through and you'll "lose" some hosts to test on. 
+
 For quickly screenshotting subdomains you find. 
 Tested on: Mac M3 Chip
 
